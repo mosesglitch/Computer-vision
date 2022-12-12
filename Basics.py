@@ -6,7 +6,7 @@ mpDraw = mp.solutions.drawing_utils
 mpPose = mp.solutions.pose
 
 pose = mpPose.Pose()
-cap = cv2.VideoCapture('PoseVideos/3.mp4')
+cap = cv2.VideoCapture(0)#('PoseVideos/3.mp4')
 pTime = 0
 while True:
     success, img = cap.read()
@@ -17,7 +17,7 @@ while True:
         mpDraw.draw_landmarks(img, results.pose_landmarks, mpPose.POSE_CONNECTIONS)
         for id, lm in enumerate(results.pose_landmarks.landmark):
             h, w, c = img.shape
-            print(id, lm)
+            print("yolo",id,"landmakkkk", lm)
             cx, cy = int(lm.x * w), int(lm.y * h)
             cv2.circle(img, (cx, cy), 5, (255, 0, 0), cv2.FILLED)
     cTime = time.time()

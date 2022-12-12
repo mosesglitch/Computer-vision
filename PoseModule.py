@@ -2,17 +2,19 @@ import mediapipe as mp
 import time
 import math
 import cv2
+
 class poseDetector():
-    def __init__(self, mode=False, upBody=False, smooth=True,
+    def __init__(self, mode=False, model_complexity=1 , upBody=False, smooth=True,
                  detectionCon=0.5, trackCon=0.5):
         self.mode = mode
+        self.model_complexity=model_complexity
         self.upBody = upBody
         self.smooth = smooth
         self.detectionCon = detectionCon
         self.trackCon = trackCon
         self.mpDraw = mp.solutions.drawing_utils
         self.mpPose = mp.solutions.pose
-        self.pose = self.mpPose.Pose(self.mode, self.upBody, self.smooth,
+        self.pose = self.mpPose.Pose(self.mode,self.model_complexity, self.upBody, self.smooth,
                                      self.detectionCon, self.trackCon)
     def findPose(self, img, draw=True):
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -58,7 +60,7 @@ class poseDetector():
                         cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), 2)
         return angle
 def main():
-    cap = cv2.VideoCapture('PoseVideos/1.mp4')
+    cap = cv2.VideoCapture(0)#('PoseVideos/1.mp4')
     pTime = 0
     detector = poseDetector()
     while True:
@@ -75,5 +77,6 @@ def main():
                     (255, 0, 0), 3)
         cv2.imshow("Image", img)
         cv2.waitKey(1)
+
 if __name__ == "__main__":
     main()
